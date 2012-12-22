@@ -1,0 +1,29 @@
+.PU
+.TH AXIS 1 local
+.SH NAME
+axis  \-  two dimensional plots
+.SH SYNOPSIS
+.ll +8
+.B axis
+[
+.B options
+]
+.ll -8
+.SH DESCRIPTION
+.PP
+A simple two dimensional plotter.  Offers automatic scaling, logarithmic
+axes, error bars, the UGS character set, and many other features.
+Without any options, takes a list of ordered pairs of numbers and makes
+a plot.  For the real manual, use "tbl axis.doc | eqn | troff -ms"
+or its nroff analogue, where "axis.doc" is in the axis source directory.
+.PP
+Axis produces output in the old UNIX graphics language ( see plot(5) ),
+and the appropriate plot filter should be used to display the output.
+.SH "SEE ALSO"
+plot(1),psun(l),ptal(l),tjplot(l),gigi(l),hplaser(l)
+.SH "DIAGNOSTICS"
+Error in arguments:
+.SH AUTHORS
+John Richardson and Bob Pearson wrote the first version.  Doug Toussaint
+did many enhancements.
+

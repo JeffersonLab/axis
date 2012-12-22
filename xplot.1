@@ -1,0 +1,38 @@
+.PU
+.TH XPLOT 1 "7 August 1989"
+.SH NAME
+xplot  \-  axis plot filter for X-11 windows
+.SH SYNOPSIS
+.ll +8
+.B xplot
+[ \fB-d \fIdisplayname\fR ]
+[ \fB-w \fIlinewidth\fR ]
+.ll -8
+.SH DESCRIPTION
+.PP
+Plot filter for X windows.  Input is a subset of the \fIplot\fR(5)
+language, sufficient to display output of axis.  The usual usage
+is \fI"axis < inputfile | xplot"\fR.  \fIxplot\fR creates a window
+with the graph.  This window may be moved, iconified, or resized using
+the window manager.  Type 'q' or 'Q' in the window to kill the display.
+.PP
+\fIxplot\fR can display on remote screens.  If the environment variable
+"DISPLAY" is set, this is used as the name of the display.  Otherwise 
+the default ":0.0" is used.  The "-d" option can be used to specify a
+display name.  The displayname is almost always \fIhostname:0.0\fR.
+Of course, the host machine for the remote display must allow access
+by your machine for this to work.
+.SH OPTIONS
+.TP
+.BI \-d \ displayname
+Specifies the name of the display to be used.
+.TP
+.BI \-w \ linewidth
+The width of lines is set to \fIlinewidth\fR.  This is not yet
+implemented.
+.SH "SEE ALSO"
+axis(l),graph(1),plot(1),psun(l),ptal(l),tjplot(l),gigi(l),hplaser(l)
+.SH "DIAGNOSTICS"
+Complaints about bad arguments or bad input data.
+.SH AUTHORS
+Weiqiang Liu and Doug Toussaint
