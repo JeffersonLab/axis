@@ -10,7 +10,8 @@
 char *index();
 
 double atof();
-g_to_ugs(c0,c1,digflag)char *c0,*c1; int digflag;
+
+void g_to_ugs(char* c0, char* c1,int digflag)
 /* digflag=1 means provide at least one digit */
 {
   int i,n;

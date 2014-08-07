@@ -35,3 +35,13 @@ void ascii(char *ptext,int xorg,int yorg,float size);
 void rascii(char *ptext,int xorg,int yorg,float size);
 void cascii(char *ptext,int xorg,int yorg,float size);
 void cvascii(char *ptext,int xorg,int yorg,float size);
+
+void point(int ix,int iy);
+
+void linemod(char *s);
+
+void digit(char *format,float *scale,int *digflag,float xlo,float xhi,int nlab);
+
+void g_to_ugs(char* c0, char* c1,int digflag);
+
+int strokes(char* text, float* x, float* y, int* bbits);

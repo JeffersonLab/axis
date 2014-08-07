@@ -10,10 +10,10 @@
    */
 #define	max(a,b)	((a)>(b)?(a):(b))
 #include <math.h>
+#include <stdio.h>
 #include "axis.h"
 
-digit(format,scale,digflag,xlo,xhi,nlab)
-char *format; float *scale; int *digflag; float xlo,xhi; int nlab;
+void digit(char *format,float *scale,int *digflag,float xlo,float xhi,int nlab)
 {
 double sig,delta,x,y,log10(),pow();
 int p,q,width,digits;

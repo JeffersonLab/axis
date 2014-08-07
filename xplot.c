@@ -35,11 +35,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#ifdef VMS
 #include <unistd.h>
 #include <ctype.h>
-#include "unixcrtl.h"
-#endif
+//#include "unixcrtl.h"
 
 /* For non-ANSI C compilers (thank you, SUN) */
 
@@ -67,10 +65,10 @@ static char icon_bits[] = {
 #define OK 0
 
 void get_opt(int, char**);
-int load_font(XFontStruct **);
-int getGC(Window, GC*, XFontStruct*);
-int TooSmall(Window, GC, XFontStruct*);
-int draw_graphics(Window, GC*, XFontStruct*, unsigned, unsigned, char*);
+void load_font(XFontStruct **);
+void getGC(Window, GC*, XFontStruct*);
+void TooSmall(Window, GC, XFontStruct*);
+void draw_graphics(Window, GC*, XFontStruct*, unsigned, unsigned, char*);
 
 /*	
 **  These are used as arguments to nearly every Xlib routine, so it saves
@@ -172,10 +170,10 @@ int main(int argc, char** argv) {
 */
   progname = argv[0];
 #ifdef VMS
-  while (temp = rindex (progname, ']')) progname = temp + 1;
+  while ((temp = rindex (progname, ']'))) progname = temp + 1;
   if (temp = rindex (progname, '.')) *temp = '\0';
 #else
-  if (temp = rindex (progname, '/')) progname = temp + 1;
+  if ((temp = rindex (progname, '/'))) progname = temp + 1;
 #endif
   get_opt (argc, argv);
 
@@ -206,7 +204,7 @@ int main(int argc, char** argv) {
 */
   db = XrmGetStringDatabase(xPlotDefaults);
 
-  if (temp = XResourceManagerString(display))
+  if ((temp = XResourceManagerString(display)))
   XrmMergeDatabases(XrmGetStringDatabase(temp), &db);
 
   if (getenv("XENVIRONMENT") &&
@@ -439,7 +437,8 @@ int main(int argc, char** argv) {
     } /* end while */
   }
 
-getGC(Window win, GC gc[], XFontStruct *font_info) {
+void getGC(Window win, GC gc[], XFontStruct *font_info) 
+{
   unsigned long valuemask = 0; /* ignore XGCvalues and use defaults */
   XGCValues values;
   unsigned int line_width = 1;
@@ -463,11 +462,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: background is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -486,11 +485,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: solidColor is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -517,11 +516,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: dottedColor is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -547,11 +546,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: shortdashedColor is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -577,11 +576,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: longdashedColor is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -607,11 +606,11 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     fprintf(stderr, "%s: dotdashedColor is %s\n", progname, colorname);
 #endif
     if (!XParseColor(display, cmap, colorname, &color)) {
-      fprintf(stderr, "%s: cannot find color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot find color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     if (!XAllocColor(display, cmap, &color)) {
-      fprintf(stderr, "%s: cannot allocate color %s\n", progname, color);
+      fprintf(stderr, "%s: cannot allocate color %s\n", progname, colorname);
       exit(EXIT_FAILURE);
       }
     pixel = color.pixel;
@@ -623,7 +622,7 @@ getGC(Window win, GC gc[], XFontStruct *font_info) {
     join_style);
   }
 
-load_font(XFontStruct **font_info) {
+void load_font(XFontStruct **font_info) {
 //  char *fontname = "*Terminal*18*";
   char *fontname = "9x15";
 
@@ -634,7 +633,7 @@ load_font(XFontStruct **font_info) {
     }
   }
 
-TooSmall(Window win, GC tgc, XFontStruct *font_info) {
+void TooSmall(Window win, GC tgc, XFontStruct *font_info) {
   char *string1 = "Too Small";
   int y_offset, x_offset;
 
@@ -645,9 +644,9 @@ TooSmall(Window win, GC tgc, XFontStruct *font_info) {
   XDrawString(display, win, tgc, x_offset, y_offset, string1, strlen(string1));
   }
 
-draw_graphics(Window win, GC gc[], XFontStruct *font_info, 
-  unsigned window_width, unsigned window_height, char *pp) {
-
+void draw_graphics(Window win, GC gc[], XFontStruct *font_info, 
+  unsigned window_width, unsigned window_height, char *pp) 
+{
     float getcoord();
     int i, code, slen, swidth, dots, xplot, yplot, xlast, ylast;
     float x, y, xmin, xmax, ymin, ymax, xdel, ydel, xcurrent, ycurrent,

@@ -501,20 +501,20 @@ static short ugs_strokes[3820] = {
 
 /* convert a ugs character string into a list of strokes.  Return the	*
 *  number of strokes found						*/
-strokes(text,x,y,bbits)
-    char *text;			/* input string */
-    float *x,*y;		/* arrays of x and y values */
-    int *bbits;			/* array of blanking bits */
+/* char *text;		input string */
+/* float *x,*y;		arrays of x and y values */
+/* int *bbits;		array of blanking bits */
+int strokes(char* text, float* x, float* y, int* bbits)
 {
-float scale;			/* current scale factor */
-float xcur,ycur;		/* current x and y values */
-float xold,yold,scaleold;	/* saved state */
-register int npts,		/* no. of strokes	*/
-	tmp,			/* temporary */
-	off,			/* offset of char in stroke table */
-	ns,			/* no. of strokes in this character */
-	k;			/* stroke counter */
-int c;				/* one character from the string */
+  float scale;			/* current scale factor */
+  float xcur,ycur;		/* current x and y values */
+  float xold,yold,scaleold;	/* saved state */
+  int npts,		/* no. of strokes	*/
+    tmp,		/* temporary */
+    off,		/* offset of char in stroke table */
+    ns,			/* no. of strokes in this character */
+    k;			/* stroke counter */
+  int c;				/* one character from the string */
 
     scale = 3.0;	/* Kludge.  This depends on the hard 4096
 				in the rest of the code.  */

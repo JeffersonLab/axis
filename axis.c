@@ -125,7 +125,7 @@ void badarg(void)
 #if 1
 int getline2(char *p)
 {	/* get a line from stdin, put in string p */
-  register int i,c;	/* return length of string, -1 if EOF */
+  int i,c;	/* return length of string, -1 if EOF */
   i = -1;
   while ((c = getchar()) != EOF){
     if ( c == '\n'){p[++i] = '\0'; return(i);}
@@ -166,7 +166,7 @@ void setopt(int argc,char *argv[])
 {
   char c, *p1, *p2;
   float temp;
-  register int i,j;
+  int i,j;
 
   /* an options line sets a break! */
   cflag = 0;
@@ -185,21 +185,21 @@ void setopt(int argc,char *argv[])
       p1 = titlebuf;
       if (++i<argc) {
 	p2 = argv[i];
-	while (*p1++ = *p2++);
+	while ((*p1++ = *p2++));
       }
     }
     else if(strcmp(argv[i],"lx")==0){    /* x label */
       p1 = xtitlebuf;
       if (++i<argc) {
 	p2 = argv[i];
-	while (*p1++ = *p2++);
+	while ((*p1++ = *p2++));
       }
     }
     else if(strcmp(argv[i],"ly")==0){    /* y label */
       p1 = ytitlebuf;
       if (++i<argc) {
 	p2 = argv[i];
-	while (*p1++ = *p2++);
+	while ((*p1++ = *p2++));
       }
     }
     else if(strcmp(argv[i],"ltx")==0){    /* title x location */
@@ -364,7 +364,7 @@ void setopt(int argc,char *argv[])
 
 void readin(void) 
 {
-  register char *t,*tt;
+  char *t,*tt;
   char *index(),*argv[32];
   struct datum *temp;
   int i,qf,argc; 
@@ -456,7 +456,7 @@ void readin(void)
 
 void transpose(void)
 {
-  register i;
+  int i;
   float f;
   struct xy t;
   if(!transf) return;
@@ -474,8 +474,8 @@ void transpose(void)
 
 char *copystring(char *p, int length)	/* copy a string into the label list */
 {
-  register char *temp;
-  register i;
+  char *temp;
+  int i;
 
   length++;		/* length of string plus null char */
   if(length > labsleft)
@@ -493,7 +493,7 @@ char *copystring(char *p, int length)	/* copy a string into the label list */
 
 void getxlim(struct xy *p, struct datum *v)
 {
-  register i;
+  int i;
 
   if(n==0)
   {
@@ -520,7 +520,7 @@ void getxlim(struct xy *p, struct datum *v)
 
 void getylim(struct xy *p, struct datum *v)
 {
-  register i;
+  int i;
   float t;
 
   if(n==0)
@@ -573,6 +573,53 @@ void getylim(struct xy *p, struct datum *v)
 	  p->xub = v[i].yv;
       }
     }
+}
+
+int submark(int *xmark,int *pxn,float x,struct xy *p)
+{
+  if(1.001*p->xlb < x && .999*p->xub > x){
+    xmark[(*pxn)++] = log10(x)*p->xa + p->xb;
+    return(1);
+  }
+  return(0);
+}
+
+int setmark(int *xmark,int *lmark,struct xy *p)
+{
+  int i,decades,xn = 0;
+  float x,xl,xu;
+  float q;
+  decades = (int)(float)log10(fabs(p->xub/p->xquant));
+  if(p->xf==log10&&!p->xqf) {
+    for(x=p->xquant; x<p->xub; x*=10) {
+      lmark[xn]=3*tick;
+      submark(xmark,&xn,x,p);
+      if(decades < 12){
+	for(i=2;i<10;i++){
+	  lmark[xn]=tick;
+	  submark(xmark,&xn,i*x,p);
+	}
+      }
+    }
+  } else {
+    xn = 0;
+    q = p->xquant;
+    if(q>0) {
+      xl = modfloor(p->xlb,q);
+      xu = modfloor(p->xub-q/10,q/5)+q/10;
+    } else {
+      xl = modfloor(p->xub,q);
+      xu = modfloor(p->xlb+q/10,q/5)-q/10;
+    }
+    for(i=0,x=xl; x<=xu; i++,x+=fabs(p->xquant)/5.0){
+      if(q>0)if(x<=p->xlb||x>=p->xub)continue;
+      if(q<0)if(x>=p->xlb||x<=p->xub)continue;
+      xmark[xn] = (*p->xf)(x)*p->xa + p->xb;
+      if(i%5){lmark[xn++] = tick;}
+      else lmark[xn++] = 3*tick;
+    }
+  }
+  return(xn);
 }
 
 void setloglim(struct z *zpt,int lbf,int ubf,float lb,float ub)
@@ -737,7 +784,7 @@ void yscale(struct xy *p)
 
 void axes(void )
 {
-  register i;
+  int i;
   int lmark[512],mark[512];
   int xn, yn;
   if(gridf==0)
@@ -769,53 +816,6 @@ void axes(void )
       line(xd.xtop-lmark[i],mark[i],xd.xtop,mark[i]);
     }
   }
-}
-
-int submark(int *xmark,int *pxn,float x,struct xy *p)
-{
-  if(1.001*p->xlb < x && .999*p->xub > x){
-    xmark[(*pxn)++] = log10(x)*p->xa + p->xb;
-    return(1);
-  }
-  return(0);
-}
-
-int setmark(int *xmark,int *lmark,struct xy *p)
-{
-  int i,decades,xn = 0;
-  float x,xl,xu;
-  float q;
-  decades = (int)(float)log10(fabs(p->xub/p->xquant));
-  if(p->xf==log10&&!p->xqf) {
-    for(x=p->xquant; x<p->xub; x*=10) {
-      lmark[xn]=3*tick;
-      submark(xmark,&xn,x,p);
-      if(decades < 12){
-	for(i=2;i<10;i++){
-	  lmark[xn]=tick;
-	  submark(xmark,&xn,i*x,p);
-	}
-      }
-    }
-  } else {
-    xn = 0;
-    q = p->xquant;
-    if(q>0) {
-      xl = modfloor(p->xlb,q);
-      xu = modfloor(p->xub-q/10,q/5)+q/10;
-    } else {
-      xl = modfloor(p->xub,q);
-      xu = modfloor(p->xlb+q/10,q/5)-q/10;
-    }
-    for(i=0,x=xl; x<=xu; i++,x+=fabs(p->xquant)/5.0){
-      if(q>0)if(x<=p->xlb||x>=p->xub)continue;
-      if(q<0)if(x>=p->xlb||x<=p->xub)continue;
-      xmark[xn] = (*p->xf)(x)*p->xa + p->xb;
-      if(i%5){lmark[xn++] = tick;}
-      else lmark[xn++] = 3*tick;
-    }
-  }
-  return(xn);
 }
 
 int conv(float xv,struct xy *p,int *ip)

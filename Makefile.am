@@ -5,8 +5,8 @@
 #AM_CCFLAGS = $(INCFLAGS) @CCFLAGS@
 #AM_LDFLAGS = -L@top_builddir@/lib @LDFLAGS@
 
-AM_CCFLAGS = @CCFLAGS@
-AM_LDFLAGS = -L/usr/X11R6/lib @LDFLAGS@
+AM_CCFLAGS = -I/usr/X11/include @CCFLAGS@ 
+AM_LDFLAGS = -L/usr/X11/lib @LDFLAGS@
 LDADD = -lX11 @LIBS@
 
 #
