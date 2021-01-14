@@ -41,10 +41,15 @@ static char *RCSID="$Header: /group/lattice/cvsroot/axis/psutil.c,v 1.2 2007/02/
 #endif
 #include "transcript.h"
 
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
+
 extern char *getenv();
 
 /* copy from file named fn to stream stm */
 /* use read and write in hopes that it goes fast */
+int
 copyfile(fn, stm)
 	char *fn;
 	register FILE *stm;

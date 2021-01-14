@@ -39,6 +39,10 @@ static char *RCSID="$Header: /group/lattice/cvsroot/axis/psplot.c,v 1.2 2007/02/
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <string.h>
+
 #include "transcript.h"
 
 private int SeenFile = 0;	/* true once a file is processed */
@@ -49,6 +53,7 @@ private char *libdir;		/* ps library directory path */
 extern char *optarg;		/* getopt current opt char */
 extern int optind;		/* getopt argv index */
 extern int getopt();
+extern int copyfile(char* fn, FILE* stm);
 
 private short int getint() {
    register int b1, b2;
@@ -153,6 +158,7 @@ private VOID CopyFile() {
     }
 }
 
+int
 main(argc, argv)
 char **argv;
 {
@@ -213,4 +219,6 @@ char **argv;
     printf("%%%%Trailer\n");
     printf("EndPSPlot\n");
     VOIDC fclose(stdout);
+    return 0;
 }
+
