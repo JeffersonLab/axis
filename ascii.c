@@ -3,8 +3,8 @@
 #include "axis.h"
 
 extern float scale;
-float	x[2000],y[2000];
-int ntext,nsize=2000,npts,bbits[2000];
+float	x[20000],y[20000];
+int ntext,nsize=20000,npts,bbits[20000];
 
 
 void ascii(char *ptext,int xorg,int yorg,float size)

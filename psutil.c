@@ -31,6 +31,7 @@ static char *RCSID="$Header: /group/lattice/cvsroot/axis/psutil.c,v 1.2 2007/02/
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #ifdef SYSV
 #include <string.h>

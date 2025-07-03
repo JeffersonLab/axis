@@ -86,7 +86,7 @@ int xtitlexf = 0;
 int xtitleyf = 0;
 int ytitlexf = 0;
 int ytitleyf = 0;
-#define BSIZ 256
+#define BSIZ 25600
 char	linebuf[BSIZ];
 char	titlebuf[BSIZ];
 char	xtitlebuf[BSIZ];
