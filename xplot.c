@@ -767,6 +767,9 @@ void draw_graphics(Window win, GC gc[], XFontStruct *font_info,
     }
   }
 
+/* RGE: There is some original-code sloppiness with use of char* and unsigned char*/
+/* The functions getcoord and sgets rely on unsigned char behavior. Pushing unsigned up is a bit problematic */
+
 float getcoord(unsigned char *pp, int *pj) {
   int c, d;
 
