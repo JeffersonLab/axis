@@ -17,7 +17,7 @@ struct xy {
   int	xlbf;		/*flag:explicit lower bound*/
   int 	xubf;		/*flag:explicit upper bound*/
   int	xqf;		/*flag:explicit quantum*/
-  double (*xf)();		/*transform function, e.g. log*/
+  double (*xf)(double);		/*transform function, e.g. log*/
   float	xa,xb;		/*scaling coefficients*/
   float	xlb,xub;	/*lower and upper bound*/
   float	xquant;		/*quantum*/
@@ -114,7 +114,7 @@ char *modes[] = {
   "longdashed"
 };
 int mode = 1;
-char *copystring();
+char *copystring(char *p, int length);
 
 void badarg(void)
 {
@@ -365,7 +365,7 @@ void setopt(int argc,char *argv[])
 void readin(void) 
 {
   char *t,*tt;
-  char *index(),*argv[32];
+  char *argv[32];
   struct datum *temp;
   int i,qf,argc; 
 

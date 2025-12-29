@@ -42,6 +42,7 @@ static char *RCSID="$Header: /group/lattice/cvsroot/axis/psplot.c,v 1.2 2007/02/
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "transcript.h"
 
@@ -52,7 +53,6 @@ private char *prog;		/* argv[0] program name */
 private char *libdir;		/* ps library directory path */
 extern char *optarg;		/* getopt current opt char */
 extern int optind;		/* getopt argv index */
-extern int getopt();
 extern int copyfile(char* fn, FILE* stm);
 
 private short int getint() {

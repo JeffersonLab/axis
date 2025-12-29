@@ -81,10 +81,10 @@ extern char TempDir[];
 #define PSSUN		"pssun"
 
 /* psutil functions */
-extern char *mstrcat();
-extern char *envget();
-extern VOID pexit();
-extern VOID pexit2();
+extern char *mstrcat(char *s0, char *s1, char *s2, int l0);
+extern char *envget(char *var);
+extern VOID pexit(char *message, int code);
+extern VOID pexit2(char *prog, char *message, int code);
 
 extern char *mapname();
 

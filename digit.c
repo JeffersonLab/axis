@@ -15,8 +15,8 @@
 
 void digit(char *format,float *scale,int *digflag,float xlo,float xhi,int nlab)
 {
-double sig,delta,x,y,log10(),pow();
-int p,q,width,digits;
+  double sig,delta,x,y;
+  int p,q,width,digits;
     *digflag = 1;	/* except in very special cases */
     x=delta=((double)xhi-(double)xlo)/(nlab-1);
     sig = (1.0e-6)*(max( fabs(xlo),fabs(xhi) ) )/x;

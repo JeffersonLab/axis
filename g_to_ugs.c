@@ -5,11 +5,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
+#include <stdlib.h>
 #include "axis.h"
-
-char *index();
-
-double atof();
 
 void g_to_ugs(char* c0, char* c1,int digflag)
 /* digflag=1 means provide at least one digit */

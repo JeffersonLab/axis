@@ -46,14 +46,9 @@ static char *RCSID="$Header: /group/lattice/cvsroot/axis/psutil.c,v 1.2 2007/02/
 #include <sys/uio.h>
 #include <unistd.h>
 
-extern char *getenv();
-
 /* copy from file named fn to stream stm */
 /* use read and write in hopes that it goes fast */
-int
-copyfile(fn, stm)
-	char *fn;
-	register FILE *stm;
+int copyfile(char *fn, FILE *stm)
 {
     	int fd, fo;
 	register int pcnt;
@@ -72,17 +67,13 @@ copyfile(fn, stm)
 }
 
 /* exit with message and code */
-VOID pexit(message, code)
-char *message;
-int code;
+VOID pexit(char *message, int code)
 {
     perror(message);
     exit(code);
 }
 /* exit with message and code */
-VOID pexit2(prog, message, code)
-char *prog, *message;
-int code;
+VOID pexit2(char *prog, char *message, int code)
 {
     fprintf(stderr,"%s: ",prog);
     VOIDC perror(message);
@@ -92,9 +83,7 @@ int code;
 /* concatenate s1 and s2 into s0 (of length l0), die if too long
  * returns a pointer to the null-terminated result
  */
-char *mstrcat(s0,s1,s2,l0)
-char *s0,*s1,*s2;
-int	l0;
+char *mstrcat(char *s0, char *s1, char *s2, int	l0)
 {
     if ((strlen(s1) + strlen(s2)) >= l0) {
 	fprintf(stderr,"concatenate overflow %s%s\n",s1,s2);
@@ -109,8 +98,7 @@ int	l0;
  *	otherwise it returns the value from the environment
  */
 
-char *envget(var)
-char *var;
+char *envget(char *var)
 {
     register char *val;
     if (((val = getenv(var)) == NULL) || (*val == '\0'))

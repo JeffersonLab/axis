@@ -88,8 +88,10 @@ XColor color;
 unsigned long pixel;
 XrmDatabase db;
 
-char *getenv();
 char* app_class = "XPlot";
+
+char* sgets(char *s, unsigned char *pp, int *pj);
+float getcoord(unsigned char *pp, int *pj);
 
 char* get_resource_string(char *res_name, char*res_class) {
   XrmValue value;
@@ -647,7 +649,6 @@ void TooSmall(Window win, GC tgc, XFontStruct *font_info) {
 void draw_graphics(Window win, GC gc[], XFontStruct *font_info, 
   unsigned window_width, unsigned window_height, char *pp) 
 {
-    float getcoord();
     int i, code, slen, swidth, dots, xplot, yplot, xlast, ylast;
     float x, y, xmin, xmax, ymin, ymax, xdel, ydel, xcurrent, ycurrent,
       xscale, yscale;
@@ -657,7 +658,6 @@ void draw_graphics(Window win, GC gc[], XFontStruct *font_info,
     int cap_style = CapRound;
     int j, join_style = JoinRound;
     GC tgc = gc[0];
-    char *sgets();
 
     dots = window_width > window_height ? window_height : window_width;
     xmin = 0.0;
